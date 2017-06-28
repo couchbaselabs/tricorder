@@ -26,8 +26,6 @@ type Stream struct {
 	currentRequests  map[uint32]*Command
 	currentResponses map[uint32]*Command
 	currentCommand   *Command
-	src              string
-	dst              string
 	latencyInfo      []LatencyInfo
 }
 

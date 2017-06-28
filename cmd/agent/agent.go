@@ -115,8 +115,6 @@ func (agent *Agent) handlePacket(packet gopacket.Packet) {
 		agent.streams[streamKey] = &Stream{
 			currentRequests:  make(map[uint32]*Command),
 			currentResponses: make(map[uint32]*Command),
-			src:              transport.TransportFlow().Src().String(),
-			dst:              transport.TransportFlow().Dst().String(),
 			mutex:            &sync.Mutex{},
 		}
 	}
