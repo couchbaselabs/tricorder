@@ -1,0 +1,24 @@
+#Port configuration for the agent
+port: 3612
+
+interface:
+  # Select the network interface to sniff the data. You can use the "any"
+  # keyword to sniff on all connected interfaces.
+  device: lo0
+  #Tricorder agent supports three sniffer types:
+  # * pcap, which uses the libpcap library and works on most platforms, but it's
+  # not the fastest option.
+  # * af_packet, which uses memory-mapped sniffing. This option is faster than
+  # libpcap and doesn't require a kernel module, but it's Linux-specific.
+  # * pf_ring, which makes use of an ntop.org project. This setting provides the
+  # best sniffing speed, but it requires a kernel module, and it's Linux-specific.
+  # The default sniffer type is pcap.
+  type: pcap
+  #memcached port to capture traffic
+  port: 11210
+
+log:
+  #Log level for the coordinator
+  #level: debug
+  #File to write logs
+  #file: coordinator.log

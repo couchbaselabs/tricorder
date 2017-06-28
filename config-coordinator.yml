@@ -1,0 +1,29 @@
+#List of the cbagents info host:port
+agents:
+   - 127.0.0.1:3612
+
+#Port configuration for the coordinator, coordinator can share host with the agent
+port: 4816
+
+#Network capture specifics
+capture:
+   #Time intervals between the captures in milliseconds. Use longer time intervals to not starve CPU.
+   interval: 0
+   #Period for capture in milliseconds. Captures packets from all agents for the specific time period
+   period: 1000
+
+#Rest port for graph
+restport: 9180
+
+#Period for which the history is saved
+history:
+   #Period for which the history is saved in minutes
+   period: 5
+   #File name
+   file: history.db
+
+logging:
+  #Log level for the coordinator
+  #level: debug
+  #File to write logs
+  #file: coordinator.log

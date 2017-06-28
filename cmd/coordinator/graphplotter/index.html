@@ -1,0 +1,79 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.1/d3.min.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+
+    data.forEach(function(d) {
+        d.timestamp = new Date(d.timestamp);
+    });
+
+    var margin = {top: 30, right: 20, bottom: 30, left: 20},
+        width = 1000 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+
+    var svg = d3.select("body").append("svg").attr("width", width).attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var xDomain = d3.extent(data, function (d, i){ return d.timestamp; });
+    var yMin = 0;
+
+    var xScale = d3.scaleTime()
+        .domain(xDomain)
+        .range([0, width]);
+
+    var yScale = d3.scaleLinear()
+        .domain([yMin, yMax])
+        .range([height, 0]);
+
+    // set up axes
+    var xAxis = d3.axisBottom(xScale)
+        .ticks(d3.timeSecond.every(10))
+        .tickPadding(1);
+
+    var yAxis = d3.axisLeft(yScale)
+        .tickValues(yScale.domain());
+
+    svg.append("g")
+        .attr("class", "axis axis--x")
+        .attr("transform", "translate("+ (margin.left + margin.right) +"," + (height - margin.bottom -margin.top ) + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "axis axis--y")
+        .attr("transform", "translate(" + (margin.left + margin.right) + ", -" + ( margin.top + margin.bottom)+" )")
+        .call(yAxis);
+
+
+    svg.selectAll("rect")
+        .data(data)
+        .enter()
+        .append("svg:rect")
+        .attr("x", function (d, i) { return xScale(d.timestamp); })
+        .attr("y", function (d, i) { return yScale(d.agent1); })
+        .attr("transform", "translate("+  (margin.left + margin.right) +",-"+ ( margin.top + margin.bottom)+")")
+        .attr("width", "5")
+        .attr("height", "5")
+        .attr("fill", "red")
+        .append("title")
+        .text(function(d) { return d.agent1; })
+        .attr("data-legend", "agent1");
+
+    svg.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("svg:circle")
+        .attr("cx", function (d, i) { return xScale(d.timestamp); })
+        .attr("cy", function (d, i) { return yScale(d.agent0); })
+        .attr("transform", "translate("+  (margin.left + margin.right) +",-"+ ( margin.top + margin.bottom)+")")
+        .attr("r", "3")
+        .attr("fill", "teal");
+
+    svg.append("g")
+        .call(d3.legend);
+
+</script>
+</body>
+</html>

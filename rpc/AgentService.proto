@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package rpc;
+
+service AgentService {
+    rpc CaptureSignal(CoordinatorCaptureRequest) returns(AgentCaptureResponse) {}
+
+    rpc GoodByeSignal(CoordinatorGoodByeRequest) returns(AgentGoodByeResponse) {}
+
+    rpc AgentResults(CoordinatorResultsRequest) returns(AgentResultsResponse) {}
+}
+
+message CoordinatorCaptureRequest {
+}
+
+message AgentCaptureResponse {
+    string status = 1;
+}
+
+message CoordinatorGoodByeRequest {
+}
+
+message AgentGoodByeResponse {
+    string status = 1;
+}
+
+message CoordinatorResultsRequest {
+}
+
+message AgentResultsResponse { 
+    message CaptureInfo {
+        string oplatency = 1;
+        string key = 2;
+        string opaque = 3;
+    }
+   
+    string status = 1;
+    map<string, CaptureInfo> captureMap = 2;
+}
