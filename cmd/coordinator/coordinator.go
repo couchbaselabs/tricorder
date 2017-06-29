@@ -248,17 +248,21 @@ func (c *Coordinator) mergeAndStore() {
 		args = append(args, rowKey)
 		args = append(args, timestamp)
 		args = append(args, row.Oplatency)
-		found := false
+		foundInOtherAgents := true
+
+		if len(agentsInfo) > 0 {
+			foundInOtherAgents = true
+		}
 		for i := 1; i < len(agentsInfo); i++ {
 			agent := agentsInfo[i]
 			if row := agent.results[rowKey]; row != nil {
 				args = append(args, row.Oplatency)
 				lat, _ := strconv.ParseInt(row.Oplatency, 10, 64)
 				c.histogram.RecordValue(lat)
-				found = true
+				foundInOtherAgents = true
 			}
 		}
-		if !found {
+		if !foundInOtherAgents {
 			break
 		}
 
